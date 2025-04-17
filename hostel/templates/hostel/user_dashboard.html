@@ -1,0 +1,12 @@
+{% extends 'hostel/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>User Dashboard</h2>
+<p>Welcome, {{ user.username }} <!--| <a href="{% url 'logout' %}">Logout</a>--></p>
+
+{% if allocation %}
+    <p>You are allocated to Room {{ allocation.room.number }} ({{ allocation.room.room_type }})</p>
+{% else %}
+    <p>No room allocated yet.</p>
+{% endif %}
+{% endblock %}

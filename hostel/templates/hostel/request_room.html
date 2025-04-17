@@ -1,0 +1,18 @@
+{% extends 'hostel/base.html' %}
+{% block title %}Request Room{% endblock %}
+{% block content %}
+<h3>Request a Room</h3>
+{% if existing_request %}
+    <p>Your request status: <strong>{{ existing_request.status }}</strong></p>
+    <p>Message: {{ existing_request.message }}</p>
+{% elif form %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary">Submit Request</button>
+    </form>
+{% endif %}
+{% if error %}
+    <div class="alert alert-danger mt-2">{{ error }}</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'hostel/base.html' %}
+{% block title %}Room Requests{% endblock %}
+{% block content %}
+<h3>Room Requests</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Role</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for req in requests %}
+        <tr>
+            <td>{{ req.user.username }}</td>
+            <td>{{ req.user.role }}</td>
+            <td>{{ req.message }}</td>
+            <td>  {% if req.status == 'approved' %}
+                <span class="badge bg-success">Approved</span>
+              {% elif req.status == 'rejected' %}
+                <span class="badge bg-danger">Rejected</span>
+              {% else %}
+                <span class="badge bg-warning text-dark">Pending</span>
+              {% endif %}</td>
+            <td>{{ req.created_at }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

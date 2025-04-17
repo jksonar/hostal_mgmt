@@ -1,0 +1,34 @@
+{% extends 'hostel/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<h2>Admin Dashboard</h2>
+<p>Welcome, {{ user.username }} <!--| <a href="{% url 'logout' %}">Logout</a>--></p>
+<!-- <p><a href="{% url 'allocate_room' %}">Allocate Room</a></p> -->
+
+<h3>Filter Allocations</h3>
+<form method="get">
+    <label>Role:</label>
+    <select name="role">
+        <option value="">-- All --</option>
+        <option value="student" {% if selected_role == 'student' %}selected{% endif %}>Student</option>
+        <option value="teacher" {% if selected_role == 'teacher' %}selected{% endif %}>Teacher</option>
+    </select>
+
+    <label>Room Type:</label>
+    <select name="room_type">
+        <option value="">-- All --</option>
+        <option value="single" {% if selected_room_type == 'single' %}selected{% endif %}>Single</option>
+        <option value="shared" {% if selected_room_type == 'shared' %}selected{% endif %}>Shared</option>
+    </select>
+
+    <label>Occupancy:</label>
+    <select name="occupancy">
+        <option value="">-- All --</option>
+        <option value="occupied" {% if selected_occupancy == 'occupied' %}selected{% endif %}>Occupied</option>
+        <option value="available" {% if selected_occupancy == 'available' %}selected{% endif %}>Available</option>
+    </select>
+
+    <button type="submit">Apply Filters</button>
+</form>
+{% endblock %}
