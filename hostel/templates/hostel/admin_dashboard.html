@@ -2,33 +2,89 @@
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 
-<h2>Admin Dashboard</h2>
-<p>Welcome, {{ user.username }} <!--| <a href="{% url 'logout' %}">Logout</a>--></p>
-<!-- <p><a href="{% url 'allocate_room' %}">Allocate Room</a></p> -->
+<div class="container mt-4">
+    <h2 class="mb-3">Admin Dashboard</h2>
+    <p class="text-muted">Welcome, {{ user.username }}</p>
 
-<h3>Filter Allocations</h3>
-<form method="get">
-    <label>Role:</label>
-    <select name="role">
-        <option value="">-- All --</option>
-        <option value="student" {% if selected_role == 'student' %}selected{% endif %}>Student</option>
-        <option value="teacher" {% if selected_role == 'teacher' %}selected{% endif %}>Teacher</option>
-    </select>
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            Filter Allocations
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label for="role" class="form-label">Role</label>
+                    <select name="role" id="role" class="form-select">
+                        <option value="">-- All --</option>
+                        <option value="student" {% if selected_role == 'student' %}selected{% endif %}>Student</option>
+                        <option value="teacher" {% if selected_role == 'teacher' %}selected{% endif %}>Teacher</option>
+                    </select>
+                </div>
 
-    <label>Room Type:</label>
-    <select name="room_type">
-        <option value="">-- All --</option>
-        <option value="single" {% if selected_room_type == 'single' %}selected{% endif %}>Single</option>
-        <option value="shared" {% if selected_room_type == 'shared' %}selected{% endif %}>Shared</option>
-    </select>
+                <div class="col-md-4">
+                    <label for="room_type" class="form-label">Room Type</label>
+                    <select name="room_type" id="room_type" class="form-select">
+                        <option value="">-- All --</option>
+                        <option value="single" {% if selected_room_type == 'single' %}selected{% endif %}>Single</option>
+                        <option value="shared" {% if selected_room_type == 'shared' %}selected{% endif %}>Shared</option>
+                    </select>
+                </div>
 
-    <label>Occupancy:</label>
-    <select name="occupancy">
-        <option value="">-- All --</option>
-        <option value="occupied" {% if selected_occupancy == 'occupied' %}selected{% endif %}>Occupied</option>
-        <option value="available" {% if selected_occupancy == 'available' %}selected{% endif %}>Available</option>
-    </select>
+                <div class="col-md-4">
+                    <label for="occupancy" class="form-label">Occupancy</label>
+                    <select name="occupancy" id="occupancy" class="form-select">
+                        <option value="">-- All --</option>
+                        <option value="occupied" {% if selected_occupancy == 'occupied' %}selected{% endif %}>Occupied</option>
+                        <option value="available" {% if selected_occupancy == 'available' %}selected{% endif %}>Available</option>
+                    </select>
+                </div>
 
-    <button type="submit">Apply Filters</button>
-</form>
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success mt-2">Apply Filters</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            Allocations
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>User</th>
+                        <th>Role</th>
+                        <th>Room</th>
+                        <th>Room Type</th>
+                        <th>Occupancy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for allocation in allocations %}
+                    <tr>
+                        <td>{{ allocation.user.username }}</td>
+                        <td>{{ allocation.user.role }}</td>
+                        <td>{{ allocation.room.number }} ({{ allocation.room.room_type|title }})</td>
+                        <td>{{ allocation.room.room_type }}</td>
+                        <td>
+                            {% if allocation.room.is_occupied %}
+                                <span class="badge bg-danger">Occupied</span>
+                            {% else %}
+                                <span class="badge bg-success">Available</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No allocations found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
