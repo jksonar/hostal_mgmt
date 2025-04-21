@@ -1,29 +1,32 @@
 {% extends 'hostel/base.html' %}
 {% block title %}Register{% endblock %}
 {% block content %}
-<h3>Register</h3>
+
+<div class="col-md-6 offset-md-3">
+<h2>Register</h2>
 <form method="post">
     {% csrf_token %}
-    <div class="mb-3">
+    <div data-mdb-input-init class="form-outline mb-4">
         {{ form.username.label_tag }}
         {{ form.username }}
     </div>
-    <div class="mb-3">
+    <div data-mdb-input-init class="form-outline mb-4">
         {{ form.email.label_tag }}
         {{ form.email }}
     </div>
-    <div class="mb-3">
+    <div data-mdb-input-init class="form-outline mb-4">
         {{ form.role.label_tag }}
         {{ form.role }}
     </div>
-    <div class="mb-3">
+    <div data-mdb-input-init class="form-outline mb-4">
         {{ form.password1.label_tag }}
         {{ form.password1 }}
     </div>
-    <div class="mb-3">
+    <div data-mdb-input-init class="form-outline mb-4">
         {{ form.password2.label_tag }}
         {{ form.password2 }}
     </div>
-    <button type="submit" class="btn btn-success">Sign Up</button>
+    <button type="submit" class="btn btn-success btn-block mb-4">Sign Up</button>
 </form>
+</div>
 {% endblock %}

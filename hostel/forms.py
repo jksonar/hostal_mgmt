@@ -14,6 +14,17 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'role', 'password1', 'password2']
 
+    def __init__(self, *args, **kwargs):
+        super(UserRegisterForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field.widget.__class__.__name__ != 'Select':
+                field.widget.attrs['class'] = 'form-control'
+        self.fields['username'].widget.attrs['placeholder'] = 'Enter your username'
+        self.fields['email'].widget.attrs['placeholder'] = 'Enter your email'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Create password'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Confirm password'
+
+
 
 class AllocationForm(forms.ModelForm):
     class Meta:
