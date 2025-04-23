@@ -79,7 +79,7 @@ def allocate_room(request):
             # Update corresponding room request to 'approved'
             RoomRequest.objects.filter(user=allocation.user, status='pending').update(status='approved')
 
-            return redirect('allocation_list')  # or wherever you're redirecting
+            return redirect('dashboard')  # or wherever you're redirecting
     else:
         form = AllocationForm()
 
